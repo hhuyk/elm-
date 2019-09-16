@@ -61,9 +61,10 @@
     export default {
       data(){
         return {
+          //food 需要在这里定义  不然无法传出
           scrollY:0, // 右侧滑动y轴坐标
           tops:[],//所有 li top 组成的数组
-          food:'',
+          food:{},//需要显示的 food
         }
       },
       mounted() {
@@ -107,7 +108,11 @@
 
         },
         showFood(food){
-
+          //设置 food  显示 food 组件
+            this.food = food
+          //通过 ref 标签 找到 对象  然后调动其方法
+          this.$refs.food.toggleShow()
+          // this.$emit('toggleShow') 这个方法在于 向父组件发送一个事件 ，然后父组件来监听这个 事件  以达到传值的效果
         },
         //一般事件相关的函数 加上下划线
         _initSrolly(){

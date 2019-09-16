@@ -11,7 +11,8 @@ import {
   LOGOUT,
   RECEIVE_GOODS,
   RECEIVE_INFO,
-  RECEIVE_RATINGS
+  RECEIVE_RATINGS,
+  UPDATE_FOOD_COUNT
 } from './mutation-types'
 
 import { reqAddress ,reqFoodCategorys,reqShops,reqLogout ,reqUserInfo,reqShopGoods ,reqShopRatings ,reqShopInfo } from "../api";
@@ -105,8 +106,10 @@ export default {
       const Info = res.data
       commit(RECEIVE_INFO,{Info} )
     }
-  }
-
+  },
+ updateFoodCount({commit},{bool ,food}) {
+    commit(UPDATE_FOOD_COUNT,{ bool, food})
+ }
 
 
 }

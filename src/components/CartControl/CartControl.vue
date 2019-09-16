@@ -1,25 +1,26 @@
 <template>
   <div class="cartcontrol">
     <transition name="move">
-      <div class="iconfont iconjianhao"></div>
+      <div class="iconfont iconjianhao" v-if="food.count" @click.stop="updateFoodCount(true)"></div>
+<!--prevent  方法是阻止默认事件-->
     </transition>
-    <div class="cart-count" >1</div>
-    <div class="iconfont iconjiahao"></div>
+    <div class="cart-count" v-if="food.count"  >{{food.count}}</div>
+    <div class="iconfont iconjiahao"  @click.stop="updateFoodCount(false)"></div>
   </div>
 </template>
 
 <script>
     export default {
-      methods :{
-        updateFoodCount(bool){
-
+      props :{
+        food:{}
+      }
+      // 改变数据不可以在这里直接改变, 应该去store
+      ,methods :{
+        updateFoodCount(bool) {
+        this.$store.dispatch('updateFoodCount',{bool , food: this.food})
         }
       },
-      props :{
-        food:{
-          type:{}
-        }
-      }
+
     }
 
 </script>
@@ -35,7 +36,7 @@
       font-size: 24px
       color: rgb(0, 160, 220)
 
-    .icon-remove_circle_outline
+    .iconjianhao
       display: inline-block
       padding 6px
       line-height 24px
@@ -55,7 +56,7 @@
       text-align: center
       font-size: 10px
       color: rgb(147, 153, 159)
-    .icon-add_circle
+    .iconjiahao
       display: inline-block
       padding: 6px
       line-height: 24px
