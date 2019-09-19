@@ -12,10 +12,11 @@ import {
   RECEIVE_GOODS,
   RECEIVE_INFO,
   RECEIVE_RATINGS,
-  UPDATE_FOOD_COUNT
+  UPDATE_FOOD_COUNT,
+  CLEAR_CART, SEARCH_SHOPS
 } from './mutation-types'
 
-import { reqAddress ,reqFoodCategorys,reqShops,reqLogout ,reqUserInfo,reqShopGoods ,reqShopRatings ,reqShopInfo } from "../api";
+import { reqAddress ,reqFoodCategorys,reqShops,reqLogout ,reqUserInfo,reqShopGoods ,reqShopRatings ,reqShopInfo,reqSearchShop } from "../api";
 
 
 export default {
@@ -93,11 +94,12 @@ export default {
        cb&&cb()
     }
   },
-  async getShopRatings({commit}){
+  async getShopRatings({commit},cb){
     const res = await  reqShopRatings()
     if(res.code ===0){
       const ratings = res.data
       commit(RECEIVE_RATINGS,{ratings } )
+      cb&&cb()
     }
   },
   async getShopInfo({commit}){
@@ -109,7 +111,19 @@ export default {
   },
  updateFoodCount({commit},{bool ,food}) {
     commit(UPDATE_FOOD_COUNT,{ bool, food})
- }
+ },
+ //清空购物车
+  clearCart({commit}){
+   commit(CLEAR_CART)
+  },
+  async searchShops({commit,state},{keyword}){
+    const geohash = state.latitude + ',' + state.longitude
+    const result = await reqSearchShop(geohash, keyword)
+    if (result.code === 0) {
+      const searchShops = result.data
+      commit(SEARCH_SHOPS, {searchShops})
+    }
 
+  }
 
 }

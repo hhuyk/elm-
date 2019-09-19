@@ -8,7 +8,7 @@ import {
   GET_LONG,
   RECEIVE_USER_INFO,
   LOGOUT, RECEIVE_GOODS, RECEIVE_RATINGS, RECEIVE_INFO,
-  UPDATE_FOOD_COUNT
+  UPDATE_FOOD_COUNT, CLEAR_CART, SEARCH_SHOPS
 } from './mutation-types'
 
 export default {
@@ -63,5 +63,15 @@ export default {
         state.cartFoods.push(food)
       }
     }
+  },
+  [CLEAR_CART](state){
+    state.cartFoods.forEach(cartFood =>{
+      cartFood.count = 0
+    })
+    state.cartFoods = []
+
+  },
+  [SEARCH_SHOPS](state , {searchShops}) {
+    state.searchShops = searchShops
   }
 }

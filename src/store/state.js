@@ -16,6 +16,7 @@ export default {
   ratings:[],
   info:[],
   cartFoods:[],//购物车中食物列表
+  searchShops:[]
 
 
 }

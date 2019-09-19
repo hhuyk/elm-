@@ -40,3 +40,4 @@ export const reqShopRatings = () => ajax('/ratings')
 export const reqShopGoods = () => ajax('/goods')
 
 export const captcha = () => ajax( BASE_URL +'/captcha')
+

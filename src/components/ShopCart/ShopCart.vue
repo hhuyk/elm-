@@ -19,14 +19,14 @@
         </div>
       </div>
       <transition name="move">
-        <div class="shopcart-list" >
+        <div class="shopcart-list" v-show="listShow">
           <div class="list-header">
             <h1 class="title">购物车</h1>
             <span class="empty" @click="clearCart">清空</span>
           </div>
           <div class="list-content">
             <ul>
-              <li class="food" v-for="(food, index) in cartFoods" :key="index">
+              <li class="food" v-for="(food, index) in cartFoods" :key="index" >
                 <span class="name">{{food.name}}</span>
                 <div class="price"><span>￥{{food.price}}</span></div>
                 <div class="cartcontrol-wrapper">
@@ -46,19 +46,27 @@
 <script>
   import CartControl from '../CartControl/CartControl'
   import { mapState ,mapGetters } from 'vuex'
-    export default {
+  import { MessageBox } from 'mint-ui'
+
+  export default {
       data(){
           return {
-            listShow:false,
+            isShow:false,
+
           }
       },
       methods :{
         toggleShow(){
-          this.listShow = ! this.listShow
+          //只有 count  大于0 的时候 才会切换
+          if(this.totalCount >0 ){
+            this.isShow  = ! this.isShow
+
+          }
         },
         clearCart(){
-
-
+          MessageBox.confirm('确定清空吗?').then(action => {
+            this.$store.dispatch('clearCart')
+          }, err=>{});
         }
       } ,
       props :{
@@ -85,6 +93,13 @@
           else {
             return '去结算'
           }
+        },
+        listShow(){
+          if(this.totalCount === 0) {
+            this.isShow = false
+            return false
+          }
+          return this.isShow
         }
       },
       components :{
@@ -200,7 +215,7 @@
       position absolute
       left 0
       top 0
-      z-index -1
+      z-index 1
       width 100%
       transform translateY(-100%)
       &.move-enter-active, &.move-leave-active

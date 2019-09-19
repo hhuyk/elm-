@@ -11,5 +11,7 @@ export const RECEIVE_GOODS = 'receive_goods'
 export const RECEIVE_RATINGS = 'receive_ratings'
 export const RECEIVE_INFO = 'receive_info'
 export const UPDATE_FOOD_COUNT = 'update_food_count'
+export const CLEAR_CART = 'clear_cart'
+export const SEARCH_SHOPS = 'search_shops'
 
 
